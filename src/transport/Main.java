@@ -1,3 +1,7 @@
+package transport;
+
+import transport.CarAssortment;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -7,6 +11,11 @@ public class Main {
 
         CarAssortment cars = new CarAssortment();
         cars.printAllCar();
+
+// ООП Инкапсуляция
+        System.out.println("HW: ООП Инкапсуляция");
+
+
 
 
 
