@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static transport.ValidateParameters.validateCarParameters;
-import static transport.ValidateParameters.validateString;
+import static transport.ValidateParameters.*;
 
 public class Car {
     private final String brand;
@@ -36,6 +35,7 @@ public class Car {
         this.registrationNumber = validateRegistrationNumber(registrationNumber);
         this.numberOfSeats = validateNumberOfSeats(numberOfSeats);
         this.typeOfTire = validateTypeOfTire(typeOfTire);
+        this.key = key;
     }
 
     //validation
@@ -60,13 +60,12 @@ public class Car {
     }
 
     public static String validateRegistrationNumber(String registrationNumber) {
-        if (Pattern.matches("[а-я][0-9]{3}[а-я]{2}[0-9]{3}", registrationNumber)){
+        if (Pattern.matches("[а-я][0-9]{3}[а-я]{2}[0-9]{3}", registrationNumber)) {
             return registrationNumber;
         } else {
-            System.out.println("Номер некорректный");
-            return "Номер некорректный";
+            return registrationNumber = "a001aa011";
         }
-           }
+    }
 
     public static int validateNumberOfSeats(int value) {
         return value <= 0 ? 4 : value;
@@ -107,6 +106,14 @@ public class Car {
 
     public String getModel() {
         return model;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
     }
 
     public double getEngineVolume() {
@@ -194,13 +201,13 @@ public class Car {
                 transmission, bodyStyle, registrationNumber, numberOfSeats);
     }
 
-    private class Key {
+    public static class Key {
         private final boolean isRemoteEngineStart;
         private final boolean isKeylessEntry;
 
         public Key(boolean isRemoteEngineStart, boolean isKeylessEntry) {
-            this.isRemoteEngineStart = isRemoteEngineStart;
-            this.isKeylessEntry = isKeylessEntry;
+            this.isRemoteEngineStart = validateBoolean(isRemoteEngineStart);
+            this.isKeylessEntry = validateBoolean(isKeylessEntry);
         }
 
         public boolean isRemoteEngineStart() {

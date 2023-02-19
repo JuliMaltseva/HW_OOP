@@ -8,4 +8,8 @@ public class ValidateParameters {
     public static String validateCarParameters(String value) {
         return validateString(value, "default");
     }
+
+    public static Boolean validateBoolean(Boolean value) {
+        return value != null && value;
+    }
 }
