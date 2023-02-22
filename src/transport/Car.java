@@ -6,30 +6,34 @@ import java.util.regex.Pattern;
 
 import static transport.ValidateParameters.*;
 
-public class Car {
-    private final String brand;
-    private final String model;
+public class Car extends Transport {
     private double engineVolume;
-    private String color;
-    private final Integer year;
-    private final String country;
     private String transmission;
     private final String bodyStyle;
     private String registrationNumber;
     private final int numberOfSeats;
     private static String typeOfTire;
+    private static Key key;
 
-    private Key key;
+    /**
+     *
+     */
 
-    public Car(String brand, String model, double engineVolume, String color, Integer year,
-               String country, String transmission, String bodyStyle,
-               String registrationNumber, int numberOfSeats, String typeOfTire, Key key) {
-        this.brand = validateCarParameters(brand);
-        this.model = validateCarParameters(model);
+    public Car(String brand,
+               String model,
+               double engineVolume,
+               String color,
+               Integer year,
+               String country,
+               String transmission,
+               String bodyStyle,
+               String registrationNumber,
+               Integer numberOfSeats,
+               String typeOfTire,
+               Integer maxSpeed,
+               Key key) {
+        super(brand, model, year, country, color, maxSpeed);
         this.engineVolume = validateEngineVolume(engineVolume);
-        this.color = validateCarColor(color);
-        this.year = validateYear(year);
-        this.country = validateCarParameters(country);
         this.transmission = validateTransmission(transmission);
         this.bodyStyle = validateBodyStyle(bodyStyle);
         this.registrationNumber = validateRegistrationNumber(registrationNumber);
@@ -43,12 +47,14 @@ public class Car {
         return value <= 0 ? 1.5 : value;
     }
 
-    public static String validateCarColor(String value) {
-        return ValidateParameters.validateString(value, "белый");
+    @Override
+    public String validateTransportColor(String value) {
+        return validateString(value, "белый");
     }
 
-    public static Integer validateYear(Integer value) {
-        return value == null ? 2000 : value;
+    @Override
+    public String validateYear(Integer value) {
+        return validateString(String.valueOf(value), "2000");
     }
 
     public static String validateTransmission(String value) {
@@ -60,14 +66,14 @@ public class Car {
     }
 
     public static String validateRegistrationNumber(String registrationNumber) {
-        if (Pattern.matches("[а-я][0-9]{3}[а-я]{2}[0-9]{3}", registrationNumber)) {
+        if (Pattern.matches("[АВЕКМНОРСТУХавекмнорстухABEKMHOPCTYXabekmhopctyx][0-9]{3}[АВЕКМНОРСТУХавекмнорстухABEKMHOPCTYXabekmhopctyx]{2}[0-9]{3}", registrationNumber)) {
             return registrationNumber;
         } else {
             return registrationNumber = "a001aa011";
         }
     }
 
-    public static int validateNumberOfSeats(int value) {
+    public static int validateNumberOfSeats(Integer value) {
         return value <= 0 ? 4 : value;
     }
 
@@ -100,14 +106,6 @@ public class Car {
     }
 
     //getters & setters
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
     public Key getKey() {
         return key;
     }
@@ -122,22 +120,6 @@ public class Car {
 
     public void setEngineVolume(double engineVolume) {
         this.engineVolume = engineVolume;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public String getTransmission() {
@@ -172,15 +154,16 @@ public class Car {
         Car.typeOfTire = typeOfTire;
     }
 
+
     @Override
     public String toString() {
-        return brand + " " + model + ", " + year + " год выпуска, " +
-                "страна сборки - " + country + ", цвет кузова - " + color +
-                ", объем двигателя - " + engineVolume + " л." +
-                ", коробка передач - " + transmission + ", тип кузова - " + bodyStyle +
-                ", регистрационный номер: " + registrationNumber +
-                ", количество мест: " + numberOfSeats + ", тип резины: " + typeOfTire;
-    }
+               return brand + " " + model + ", " + year + " год выпуска, " + "страна сборки - " +
+                country + ", цвет кузова - " + color + ", объем двигателя - " +
+                engineVolume + " л." + ", коробка передач - " + transmission +
+                ", тип кузова - " + bodyStyle + ", регистрационный номер: " + registrationNumber +
+                ", количество мест: " + numberOfSeats + ", тип резины: " + typeOfTire +
+                ", максимальная скорость передвижения: " + maxSpeed +  " км/ч.";
+           }
 
     @Override
     public boolean equals(Object o) {
@@ -240,6 +223,8 @@ public class Car {
             return Objects.hash(isRemoteEngineStart, isKeylessEntry);
         }
     }
+
+
 }
 
 
