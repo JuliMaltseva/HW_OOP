@@ -18,10 +18,17 @@ public class Main {
         cars.printAllCar();
         System.out.println();
 
+// ООП: наследование, static
+        System.out.println("HW: ООП: наследование, static");
 
+        System.out.println("информация о каждом транспорте и все указанные характеристики:");
+        System.out.println();
 
+        cars.printAllCar();
+        System.out.println();
 
-
+        BusAssortment busAssortment = new BusAssortment();
+        busAssortment.printAllBas();
 
 
     }
